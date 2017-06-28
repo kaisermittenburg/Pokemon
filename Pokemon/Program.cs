@@ -7,7 +7,7 @@ namespace Pokemon
         public static void Main(string[] args)
         {
             Colosseum colosseum = new Colosseum();
-            colosseum.Battle();
+            colosseum.Play();
         }
     }
 }
