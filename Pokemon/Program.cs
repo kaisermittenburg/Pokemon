@@ -6,7 +6,8 @@ namespace Pokemon
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Colosseum colosseum = new Colosseum();
+            colosseum.Battle();
         }
     }
 }
