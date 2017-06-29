@@ -37,6 +37,9 @@
     <Compile Include="Colosseum.cs" />
     <Compile Include="Dice.cs" />
     <Compile Include="Pokemon.cs" />
+    <Compile Include="MoveSet.cs" />
+    <Compile Include="Move.cs" />
+    <Compile Include="MoveIndex.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
