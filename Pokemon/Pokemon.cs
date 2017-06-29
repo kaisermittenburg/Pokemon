@@ -10,6 +10,7 @@ namespace Pokemon
         private string name;
         private string type;
         private int wins;
+        private MoveSet moveSet;
         #endregion
 
         #region Member Methods
