@@ -13,16 +13,44 @@ namespace Pokemon
 
         public Colosseum()
         {
+            d2 = new Dice(2);
+            d6 = new Dice(6);
+            d20 = new Dice(20);
+            player1 = new Pokemon();
+            player2 = new Pokemon();
             PokemonBuild(player1);
             PokemonBuild(player2);
         }
         public void Play()
         {
-            Battle(player1, player2);
+            int roll = d2.Roll();
+            if (roll == 1)
+                Battle(player1, player2);
+            else
+                Battle(player2, player1);
 		}
         public void Battle(Pokemon player1, Pokemon player2)
         {
-            
+            Console.WriteLine(player1.Name + " will go first!\n");
+            while(true)//neither is dead
+            {
+                if(true) //neither is dead
+                {
+                    Attack(player1, player2);
+                }
+                if(true) //neither is dead
+                {
+                    Attack(player2,player1);
+                }
+            }
+            if(player1.Hp <= 0)
+            {
+                GameOver(player2);
+            }
+            else
+            {
+                GameOver(player1);
+            }
         }
         private void Attack(Pokemon attacker, Pokemon defender)
         {
@@ -68,5 +96,9 @@ namespace Pokemon
             WriteLine(pokemon.AttackLevel);
             WriteLine(pokemon.DefenseLevel);
 		}
+        private void GameOver(Pokemon winner)
+        {
+            
+        }
     }
 }
