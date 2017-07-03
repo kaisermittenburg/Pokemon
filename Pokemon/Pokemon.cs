@@ -16,7 +16,7 @@ namespace Pokemon
         #region Member Methods
         public Pokemon()
         {
-
+            Hp = 500;
         }
         public int Hp { get { return hp; } set { hp = value; } }
 
@@ -29,6 +29,8 @@ namespace Pokemon
         public string Type { get { return type; } set { type = value; } }
 
         public int Wins { get { return wins; } set { wins = value; }}
+
+        public MoveSet MoveSet { get { return moveSet; } set { moveSet = value; } }
         #endregion
 
     }

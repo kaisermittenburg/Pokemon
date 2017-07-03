@@ -10,7 +10,7 @@ namespace Pokemon
         {
             Initialize();
         }
-
+        List<string> ChooseableMoves = new List<string>();
         List<Move> Moves = new List<Move>();
         private void Initialize()
         {
@@ -21,6 +21,15 @@ namespace Pokemon
             Moves.Add(new Move() { name = "Sprinkler", moveType = "Element", group = "Water", special = true, hitChance = 90, maxDamage = 15 });
             Moves.Add(new Move() { name = "Hail", moveType = "Element", group = "Water", special = true, hitChance = 100, maxDamage = 15 });
             Moves.Add(new Move() {name = "Defend", moveType = "Defense", group = "all", special = true, hitChance = 100, maxDamage = 0});
+        }
+        public List<Move> GetChooseableMoves(string userGroup)
+        {
+            List<Move> ChooseableMoves = new List<Move>();
+            foreach (Move move in Moves)
+                if (move.group == "all" || move.group == userGroup)
+                    ChooseableMoves.Add(move);
+
+            return ChooseableMoves;
         }
     }
     public class SpecialMoveIndex

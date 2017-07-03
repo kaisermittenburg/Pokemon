@@ -59,7 +59,6 @@ namespace Pokemon
 
         private void PokemonBuild(Pokemon pokemon) //error checking on input
         {
-            pokemon = new Pokemon();
             WriteLine("Player, please build your Pokemon!");
             WriteLine("Enter its name");
             pokemon.Name = ReadLine();
@@ -90,12 +89,27 @@ namespace Pokemon
             int.TryParse(ReadLine(), out int defense);
             pokemon.AttackLevel = attack;
             pokemon.DefenseLevel = defense;
-
+            AssignMove(pokemon, 1);
+            AssignMove(pokemon, 2);
+            AssignMove(pokemon, 3);
+            AssignMove(pokemon, 4);
             WriteLine(pokemon.Name);
             WriteLine(pokemon.Type);
             WriteLine(pokemon.AttackLevel);
             WriteLine(pokemon.DefenseLevel);
 		}
+
+        private void AssignMove(Pokemon pokemon,int moveNum)
+        {
+            Console.WriteLine("Please choose Move " + moveNum + ":");
+            MoveIndex index = new MoveIndex();
+            var moves = index.GetChooseableMoves(pokemon.Type);
+            foreach(var move in moves)
+            {
+                Console.WriteLine("[" + move.moveType + "] " + move.name);
+            }
+        }
+
         private void GameOver(Pokemon winner)
         {
             
