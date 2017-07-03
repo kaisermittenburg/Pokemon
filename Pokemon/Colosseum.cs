@@ -32,13 +32,13 @@ namespace Pokemon
         public void Battle(Pokemon player1, Pokemon player2)
         {
             Console.WriteLine(player1.Name + " will go first!\n");
-            while(true)//neither is dead
+            while(player1.Hp >= 1 && player2.Hp >= 1)//neither is dead
             {
-                if(true) //neither is dead
+                if(player1.Hp >= 1 && player2.Hp >= 1) //neither is dead
                 {
                     Attack(player1, player2);
                 }
-                if(true) //neither is dead
+                if(player1.Hp >= 1 && player2.Hp >= 1) //neither is dead
                 {
                     Attack(player2,player1);
                 }
@@ -54,7 +54,7 @@ namespace Pokemon
         }
         private void Attack(Pokemon attacker, Pokemon defender)
         {
-            
+            throw new NotImplementedException();
         }
 
         private void PokemonBuild(Pokemon pokemon) //error checking on input
@@ -93,10 +93,21 @@ namespace Pokemon
             AssignMove(pokemon, 2);
             AssignMove(pokemon, 3);
             AssignMove(pokemon, 4);
-            WriteLine(pokemon.Name);
-            WriteLine(pokemon.Type);
-            WriteLine(pokemon.AttackLevel);
-            WriteLine(pokemon.DefenseLevel);
+            Console.Clear();
+
+            WriteLine("Pokemon Summary \n-------------- ");
+            WriteLine("Name: " + pokemon.Name);
+            WriteLine("Type: " + pokemon.Type);
+            WriteLine("Attack: " + pokemon.AttackLevel);
+            WriteLine("Defense: " + pokemon.DefenseLevel);
+            //WriteLine("Move 1: " + pokemon.MoveSet.move1.name);
+            //WriteLine("Move 2: " + pokemon.MoveSet.move2.name);
+            //WriteLine("Move 3: " + pokemon.MoveSet.move3.name);
+            //WriteLine("Move 4: " + pokemon.MoveSet.move4.name);
+            WriteLine("Please hit enter to continue");
+            ReadKey();
+            //wait command??? requre key type???
+            Console.Clear();
 		}
 
         private void AssignMove(Pokemon pokemon,int moveNum)
@@ -112,7 +123,7 @@ namespace Pokemon
 
         private void GameOver(Pokemon winner)
         {
-            
+            throw new NotImplementedException();
         }
     }
 }
