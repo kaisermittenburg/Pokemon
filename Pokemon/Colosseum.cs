@@ -13,6 +13,7 @@ namespace Pokemon
         Dice d2;
         Dice d6;
         Dice d20;
+        Dice d100;
         #endregion
 
         #region Member Methods
@@ -21,6 +22,7 @@ namespace Pokemon
             d2 = new Dice(2);
             d6 = new Dice(6);
             d20 = new Dice(20);
+            d100 = new Dice(100);
             player1 = new Pokemon();
             player2 = new Pokemon();
             PokemonBuild(player1);
@@ -62,7 +64,63 @@ namespace Pokemon
 
         private void Attack(Pokemon attacker, Pokemon defender)
         {
-            throw new NotImplementedException();
+            int attackBonus = attacker.AttackLevel;
+            int defenseBonus = defender.DefenseLevel;
+            var roll = d100.Roll();
+            Move attackMove;
+
+            Console.WriteLine(attacker.Name + ", please choose your move: \n");
+            Console.WriteLine("[" + attacker.MoveSet.move1.moveType + "] " + attacker.MoveSet.move1.name);
+            Console.WriteLine("[" + attacker.MoveSet.move2.moveType + "] " + attacker.MoveSet.move2.name);
+            Console.WriteLine("[" + attacker.MoveSet.move3.moveType + "] " + attacker.MoveSet.move3.name);
+            Console.WriteLine("[" + attacker.MoveSet.move4.moveType + "] " + attacker.MoveSet.move4.name);
+
+			string choice;
+			choice = ReadLine();
+            while (choice != attacker.MoveSet.move1.name && choice != attacker.MoveSet.move2.name && choice != attacker.MoveSet.move3.name && choice != attacker.MoveSet.move4.name)
+			{
+				Console.WriteLine("You did not enter a valid move. Please type the name [case sensitive]");
+				choice = ReadLine();
+			}
+            if(choice == attacker.MoveSet.move1.name)
+            {
+                attackMove = attacker.MoveSet.move1;
+            }
+            else if(choice == attacker.MoveSet.move2.name)
+            {
+                attackMove = attacker.MoveSet.move2;
+            }
+            else if(choice == attacker.MoveSet.move3.name)
+            {
+                attackMove = attacker.MoveSet.move3;
+            }
+            else
+            {
+                attackMove = attacker.MoveSet.move4;
+            }
+
+            if(roll <= attackMove.hitChance) // Not Missed
+            {
+                double totalDamage = (.5 * attackMove.maxDamage) + ((.5*attackMove.maxDamage)*(attackBonus/100));
+                totalDamage = (totalDamage * .75) - ((totalDamage*.25)*(defenseBonus/100));
+
+                Console.WriteLine(attacker.Name + " hit dealing " + totalDamage + " damage!");
+                defender.Hp = defender.Hp - totalDamage;
+                System.Threading.Thread.Sleep(1000);
+                if (defender.Hp <= 0)
+                    Console.WriteLine(defender.Name + " has 0 HP left!");
+                else
+                    Console.WriteLine(defender.Name + " has " + defender.Hp + " HP left!");
+                System.Threading.Thread.Sleep(1500);
+                Console.Clear();
+
+            }
+            else
+            {
+                Console.WriteLine("The attack missed!");
+                System.Threading.Thread.Sleep(2000);
+                Console.Clear();
+            }
         }
 
         private void PokemonBuild(Pokemon pokemon) 

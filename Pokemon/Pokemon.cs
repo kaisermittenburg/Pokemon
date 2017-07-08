@@ -4,7 +4,7 @@ namespace Pokemon
     public class Pokemon
     {
         #region Member Variables
-        private int hp;
+        private double hp;
         private int attackLevel;
         private int defenseLevel;
         private string name;
@@ -16,10 +16,10 @@ namespace Pokemon
         #region Member Methods
         public Pokemon()
         {
-            Hp = 500;
+            Hp = 150;
             moveSet = new MoveSet();
         }
-        public int Hp { get { return hp; } set { hp = value; } }
+        public double Hp { get { return hp; } set { hp = value; } }
 
         public int AttackLevel { get { return attackLevel; } set { attackLevel = value; } }
 
