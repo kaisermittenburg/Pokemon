@@ -8,8 +8,8 @@ namespace Pokemon
     public class Colosseum
     {
         #region Member Variables
-        Pokemon player1;
-        Pokemon player2;
+        Player player1;
+        Player player2;
         Dice d2;
         Dice d6;
         Dice d20;
@@ -23,8 +23,14 @@ namespace Pokemon
             d6 = new Dice(6);
             d20 = new Dice(20);
             d100 = new Dice(100);
-            player1 = new Pokemon();
-            player2 = new Pokemon();
+            player1 = new Player();
+            player2 = new Player();
+            Console.WriteLine("Player 1, please enter your name:");
+            player1.Name = ReadLine();
+            Console.Clear();
+            Console.WriteLine("Player 2, please enter your name:");
+            player2.Name = ReadLine();
+            Console.Clear();
             PokemonBuild(player1);
             PokemonBuild(player2);
         }
@@ -38,27 +44,27 @@ namespace Pokemon
                 Battle(player2, player1);
 		}
 
-        public void Battle(Pokemon player1, Pokemon player2)
+        public void Battle(Player player1, Player player2)
         {
             Console.WriteLine(player1.Name + " will go first!\n");
-            while(player1.Hp >= 1 && player2.Hp >= 1)//neither is dead
+            while(player1.Pokemon.Hp >= 1 && player2.Pokemon.Hp >= 1)//neither is dead
             {
-                if(player1.Hp >= 1 && player2.Hp >= 1) //neither is dead
+                if(player1.Pokemon.Hp >= 1 && player2.Pokemon.Hp >= 1) //neither is dead
                 {
-                    Attack(player1, player2);
+                    Attack(player1.Pokemon, player2.Pokemon);
                 }
-                if(player1.Hp >= 1 && player2.Hp >= 1) //neither is dead
+                if(player1.Pokemon.Hp >= 1 && player2.Pokemon.Hp >= 1) //neither is dead
                 {
-                    Attack(player2,player1);
+                    Attack(player2.Pokemon,player1.Pokemon);
                 }
             }
-            if(player1.Hp <= 0)
+            if(player1.Pokemon.Hp <= 0)
             {
-                GameOver(player2);
+                GameOver(player2 , player1);
             }
             else
             {
-                GameOver(player1);
+                GameOver(player1, player2);
             }
         }
 
@@ -123,30 +129,30 @@ namespace Pokemon
             }
         }
 
-        private void PokemonBuild(Pokemon pokemon) 
+        private void PokemonBuild(Player player) 
         {
-            WriteLine("Player, please build your Pokemon!");
+            WriteLine(player.Name + ", build your Pokemon!");
             WriteLine("Enter its name");
-            pokemon.Name = ReadLine();
+            player.Pokemon.Name = ReadLine();
             Console.Clear();
             WriteLine("Choose its type (number) \n1) Grass\n2) Fire\n3) Water\n4) Rock\n5) Mystic");
             int.TryParse(ReadLine(), out int type);
             switch(type)
             {
                 case 1:
-                    pokemon.Type = "Grass";
+                    player.Pokemon.Type = "Grass";
                     break;
 				case 2:
-					pokemon.Type = "Fire";
+					player.Pokemon.Type = "Fire";
 					break;
 				case 3:
-					pokemon.Type = "Water";
+					player.Pokemon.Type = "Water";
 					break;
 				case 4:
-					pokemon.Type = "Rock";
+					player.Pokemon.Type = "Rock";
 					break;
                 case 5:
-                    pokemon.Type = "Mystic";
+                    player.Pokemon.Type = "Mystic";
                     break;
             }
             Console.Clear();
@@ -166,22 +172,22 @@ namespace Pokemon
                 Console.WriteLine("Your entry is invalid, please enter a number between 0 and " + (100-attack) + ".");
                 int.TryParse(ReadLine(), out defense);
             }
-            pokemon.AttackLevel = attack;
-            pokemon.DefenseLevel = defense;
+            player.Pokemon.AttackLevel = attack;
+            player.Pokemon.DefenseLevel = defense;
             Console.Clear();
-            AssignMove(pokemon);
+            AssignMove(player.Pokemon);
             
             Console.Clear();
 
-            WriteLine("Pokemon Summary \n-------------- ");
-            WriteLine("Name: " + pokemon.Name);
-            WriteLine("Type: " + pokemon.Type);
-            WriteLine("Attack: " + pokemon.AttackLevel);
-            WriteLine("Defense: " + pokemon.DefenseLevel);
-            WriteLine("Move 1: " + pokemon.MoveSet.move1.name);
-            WriteLine("Move 2: " + pokemon.MoveSet.move2.name);
-            WriteLine("Move 3: " + pokemon.MoveSet.move3.name);
-            WriteLine("Move 4: " + pokemon.MoveSet.move4.name);
+            WriteLine(player.Name + "'s Pokemon Summary \n-------------- ");
+            WriteLine("Name: " + player.Pokemon.Name);
+            WriteLine("Type: " + player.Pokemon.Type);
+            WriteLine("Attack: " + player.Pokemon.AttackLevel);
+            WriteLine("Defense: " + player.Pokemon.DefenseLevel);
+            WriteLine("Move 1: " + player.Pokemon.MoveSet.move1.name);
+            WriteLine("Move 2: " + player.Pokemon.MoveSet.move2.name);
+            WriteLine("Move 3: " + player.Pokemon.MoveSet.move3.name);
+            WriteLine("Move 4: " + player.Pokemon.MoveSet.move4.name);
             WriteLine("Please hit enter to continue");
             ReadKey();
             Console.Clear();
@@ -239,9 +245,28 @@ namespace Pokemon
             } while (pokemon.MoveSet.move1.name == null || pokemon.MoveSet.move2.name == null || pokemon.MoveSet.move3.name == null || pokemon.MoveSet.move4.name == null);
         }
 
-        private void GameOver(Pokemon winner)
+        private void GameOver(Player winner, Player loser)
         {
-            throw new NotImplementedException();
+            Console.Clear();
+            Console.WriteLine(winner.Name + " is the victor!");
+            winner.Wins++;
+            Console.WriteLine(winner.Name + " has " + winner.Wins + " victories!");
+            Console.WriteLine("Would you like to play again?");
+            var key = ReadLine();
+            if (key == "y")
+                Reset(winner, loser);
+        }
+
+        private void Reset(Player winner, Player loser)
+        {
+            Console.Clear();
+            winner.Pokemon.Reset();
+            loser.Pokemon.Reset();
+            Console.WriteLine("The winner will build first");
+            System.Threading.Thread.Sleep(1500);
+            PokemonBuild(winner);
+            PokemonBuild(loser);
+            Battle(winner, loser);
         }
         #endregion
     }

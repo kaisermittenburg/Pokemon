@@ -32,6 +32,14 @@ namespace Pokemon
         public int Wins { get { return wins; } set { wins = value; }}
 
         public MoveSet MoveSet { get { return moveSet; } set { moveSet = value; } }
+
+        public void Reset()
+        {
+            hp = 150;
+            attackLevel = 0;
+            defenseLevel = 0;
+            moveSet = new MoveSet();
+        }
         #endregion
 
     }
